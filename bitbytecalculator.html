@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="author" content="Kurt Rebel"/>
+  <title>Bits and Bytes</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- <script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script> -->
+
+	<style>
+	.banner {
+  background-color: #34282C;
+  text-align: center;
+  font-size: 35px;
+  font-family: "Roboto";
+  color: #fff;
+  margin: 1% 0% 2% 0%;
+  padding-top: 2%;
+  /* width: 1940px; */
+  max-width: 100%;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0066ff, 0 0 30px #0066ff, 0 0 40px #0066ff, 0 0 55px #0066ff, 0 0 75px #0066ff; }
+
+.wbanner {
+  background-color: #34282C;
+  text-align: center;
+  font-size: 40px;
+  font-family: "Roboto";
+  color: #fff;
+  margin: 2% 0% 6% 0%;
+  padding-top: 2%;
+  /* width: 1940px; */
+  max-width: 100%;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ccccff, 0 0 30px #ccccff, 0 0 40px #ccccff, 0 0 55px #ccccff, 0 0 75px #ccccff; }
+
+@media \0screen {
+  .container {
+    width: auto;
+    /* for ie 8 */ } }
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px; } }
+
+body {
+  background-color: WhiteSmoke; }
+
+.content {
+  max-width: 100%;
+  background-color: Gainsboro;
+  padding: 10px;
+  margin: 3% 1% 6% 1%;
+  color: black;
+  font-family: "Verdana", Courier, monospace; }
+
+.netxfer {
+  text-align: center;
+  font-family: Verdana;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 2% 0% 2% 0%;
+}
+
+.bar {
+  background-color: AliceBlue;
+  margin: 2% 0% 2% 0%;
+}
+
+#txt {
+  text-align: left;
+  font-size: 12px;
+  margin-top: 40px;
+}
+
+.bttn {
+  border: 1px solid LightGreen;
+  border-radius: 1px;
+  background-color: Silver; }
+
+.bttn:hover {
+  background-color: LightGreen;
+  border-radius: 1px;
+  border: 1px solid #000099; }
+
+/* Remove input number type box up/down (spinner) arrows: */
+
+/* For Firefox */
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+/* Webkit browsers like Safari and Chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+	</style>
+
+<script type = "text/javascript">
+function submitForm(){
+var radios = document.getElementsByName('rates');
+
+for (var i = 0, length = radios.length; i < length; i++)
+{
+ if (radios[i].checked)  {
+  // do whatever you want with the checked radio
+  // alert(radios[i].value);
+  val = radios[i].value;
+
+  var valIn = document.getElementById("valIn");
+  if (val === "bits") {
+    var BytesOut = document.getElementById("BytesOut");
+    var KBytesOut = document.getElementById("KBytesOut");
+    var MBytesOut = document.getElementById("MBytesOut");
+    var GBytesOut = document.getElementById("GBytesOut");
+    var amt = valIn.value;
+    BytesOut.value = amt / 8;
+    KBytesOut.value = amt / 8192;
+    MBytesOut.value = amt / 8388608;
+    GBytesOut.value = amt / 8589934592;
+    TBytesOut.value = amt / 8796093022208;
+  } else if (val === "kbits") {
+    var BytesOut = document.getElementById("BytesOut");
+    var KBytesOut = document.getElementById("KBytesOut");
+    var MBytesOut = document.getElementById("MBytesOut");
+    var GBytesOut = document.getElementById("GBytesOut");
+    var amt = valIn.value;
+    BytesOut.value = 1000 * (amt / 8);
+    KBytesOut.value = amt / 8;
+    MBytesOut.value = (amt / 8) * 0.001;
+    GBytesOut.value = amt / 8589934592;
+  } else if (val === "mbits") {
+    var BytesOut = document.getElementById("BytesOut");
+    var KBytesOut = document.getElementById("KBytesOut");
+    var MBytesOut = document.getElementById("MBytesOut");
+    var GBytesOut = document.getElementById("GBytesOut");
+    var amt = valIn.value;
+    BytesOut.value = 1000000 * (amt / 8);
+    KBytesOut.value = 1000 * (amt / 8);
+    MBytesOut.value = amt / 8;
+    GBytesOut.value = amt / 8589934592;
+  } else if (val === "gbits") {
+    var KBytesOut = document.getElementById("KBytesOut");
+    var MBytesOut = document.getElementById("MBytesOut");
+    var GBytesOut = document.getElementById("GBytesOut");
+    var amt = valIn.value;
+    KBytesOut.value = (amt / 8) * 1000000;
+    MBytesOut.value = (amt / 8) * 1000;
+    GBytesOut.value = (amt / 8) * 1;
+  }
+  // only one radio can be logically checked, don't check the rest
+  break;
+ }
+}
+}
+</script>
+
+<script type = "text/javascript">
+function calcbits(){
+var radios = document.getElementsByName('rates2');
+
+for (var i = 0, length = radios.length; i < length; i++)
+{
+ if (radios[i].checked)  {
+  // do whatever you want with the checked radio
+  // alert(radios[i].value);
+  unit = radios[i].value;
+
+  var input = document.getElementById("input");
+  if (unit === "KBytes") {
+    var kbitsOut = document.getElementById("kbitsOut");
+    var mbitsOut = document.getElementById("mbitsOut");
+    var numbr = input.value;
+    kbitsOut.value = numbr * 8;
+    mbitsOut.value = numbr * (8 * 0.001);
+  } else if (unit === "MBytes") {
+    var kbitsOut = document.getElementById("kbitsOut");
+    var mbitsOut = document.getElementById("mbitsOut");
+    var numbr = input.value;
+    kbitsOut.value = 1000 * (numbr * 8);
+    mbitsOut.value = numbr * 8;
+  }
+  // only one radio can be logically checked, don't check the rest
+  break;
+ }
+}
+}
+</script>
+
+<script type = "text/javascript">
+function calcbytes(){
+var radios = document.getElementsByName('rates3');
+
+for (var i = 0, length = radios.length; i < length; i++)
+{
+ if (radios[i].checked)  {
+  // do whatever you want with the checked radio
+  // alert(radios[i].value);
+  unitB = radios[i].value;
+
+  var innum = document.getElementById("innum");
+  if (unitB === "BytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+    var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin;
+    KBytesOutStor.value = userin / 1024;
+	  MBytesOutStor.value = userin / 1048576;
+	  GBytesOutStor.value = userin / 1073741824;
+	  TBytesOutStor.value = userin / 1099511627776;
+	  PBytesOutStor.value = userin / 1125899906842620;
+  } else if (unitB === "KBytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+	  var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin * 1024;
+    KBytesOutStor.value = userin;
+	  MBytesOutStor.value = userin / 1024;
+	  GBytesOutStor.value = userin / 1048576;
+	  TBytesOutStor.value = userin / 1073741824;
+	  PBytesOutStor.value = userin / 1099511627776;
+  } else if (unitB === "MBytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+	  var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin * 1048576;
+    KBytesOutStor.value = userin * 1024;
+	  MBytesOutStor.value = userin;
+	  GBytesOutStor.value = userin / 1024;
+	  TBytesOutStor.value = userin / 1048576;
+	  PBytesOutStor.value = userin / 1073741824;
+  } else if (unitB === "GBytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+	  var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin * 1073741824;
+    KBytesOutStor.value = userin * 1048576;
+	  MBytesOutStor.value = userin * 1024;
+	  GBytesOutStor.value = userin;
+	  TBytesOutStor.value = userin / 1024;
+	  PBytesOutStor.value = userin / 1048576;
+  } else if (unitB === "TBytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+	  var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin * 1099511627776;
+    KBytesOutStor.value = userin * 1073741824;
+	  MBytesOutStor.value = userin * 1048576;
+	  GBytesOutStor.value = userin * 1024;
+	  TBytesOutStor.value = userin;
+	  PBytesOutStor.value = userin / 1024;
+  } else if (unitB === "PBytesSel") {
+    var BytesOutStor = document.getElementById("BytesOutStor");
+    var KBytesOutStor = document.getElementById("KBytesOutStor");
+	  var MBytesOutStor = document.getElementById("MBytesOutStor");
+	  var GBytesOutStor = document.getElementById("GBytesOutStor");
+	  var TBytesOutStor = document.getElementById("TBytesOutStor");
+	  var PBytesOutStor = document.getElementById("PBytesOutStor");
+    var userin = innum.value;
+    BytesOutStor.value = userin * 1125899906842620;
+    KBytesOutStor.value = userin * 1099511627776;
+	  MBytesOutStor.value = userin * 1073741824;
+	  GBytesOutStor.value = userin * 1048576;
+	  TBytesOutStor.value = userin * 1024;
+	  PBytesOutStor.value = userin;
+  }
+  // only one radio can be logically checked, don't check the rest
+  break;
+ }
+}
+}
+</script>
+
+</head>
+
+<body>
+
+  <div class='container'>
+   		<!-- container body -->
+   		<div class='row banner'>
+   			<div class='col-xs-12 col-md-12'>
+   				Bits and Bytes (data rate converter/calculator)
+   			</div>
+      </div>
+   		<div class='row content'>
+   		<!--	<div class='col-xs-3 col-xs-3'></div> -->
+      <div class='col-xs-12 col-md-12 netxfer'>bits to Bytes to bits...network transfer rates</div>
+
+   		 <div class='col-xs-6 col-md-6'>
+
+  <form action="#n" name="theForm">
+
+      <label for="rate">--></label>
+      <input type = "number" step="0.01" id = "valIn">
+      <input type="radio" name="rates" value="bits" checked> bits
+      <input type="radio" name="rates" value="kbits" > kbits
+      <input type="radio" name="rates" value="mbits" > mbits
+      <input type="radio" name="rates" value="gbits" > gbits
+      <!-- <a href="javascript: submitForm();">Calculate</a><br> -->
+      <input type = "button" class="bttn" value = "Calculate" onclick = "submitForm()"/><br>
+      <input type = "number" step="0.01" id = "BytesOut"><b> Bytes (B)</b></><br>
+      <input type = "number" step="0.01" id = "KBytesOut"><b> KBytes (KB)</b></><br>
+      <input type = "number" step="0.01" id = "MBytesOut"><b> MBytes (MB)</b></><br>
+      <input type = "number" step="0.01" id = "GBytesOut"><b> GBytes (GB)</b></>
+  </form>
+  </div>
+<!--
+ <div class='col-xs-12 col-md-12'>&nbsp</div>
+ <div class='col-xs-12 col-md-12'>&nbsp</div> -->
+
+  <div class='col-xs-6 col-md-6'>
+    <form action="#n" name="theForm">
+
+        <label for="rate">--></label>
+        <input type = "number" step="0.01" id = "input">
+        <input type="radio" name="rates2" value="KBytes" checked > KBytes
+        <input type="radio" name="rates2" value="MBytes" > MBytes
+        <!-- <a href="javascript: submitForm();">Calculate</a><br> -->
+        <input type = "button" class="bttn" value = "Calculate" onclick = "calcbits()"/><br>
+        <input type = "number" step="0.01" id = "kbitsOut"><b> kbits (kb)</b></><br>
+        <input type = "number" step="0.01" id = "mbitsOut"><b> mbits (mb)</b></><br>
+    </form>
+  </div>
+
+
+<div class='col-xs-12 col-md-12 bar'>&nbsp</div>
+
+<div class='col-xs-12 col-md-12 netxfer'>Bytes/KBytes/MBytes/GBytes/TBytes/PBytes size converter</div>
+<div class='col-xs-12 col-md-12'>
+  <form action="#n" name="theForm">
+      <label for="rate">--></label>
+      <input type = "number" step="0.01" id = "innum">
+      <input type="radio" name="rates3" value="BytesSel" checked > Bytes
+      <input type="radio" name="rates3" value="KBytesSel" > KBytes
+      <input type="radio" name="rates3" value="MBytesSel" > MBytes
+      <input type="radio" name="rates3" value="GBytesSel" > GBytes
+      <input type="radio" name="rates3" value="TBytesSel" > TBytes
+      <input type="radio" name="rates3" value="PBytesSel" > PBytes
+      <!-- <a href="javascript: submitForm();">Calculate</a><br> -->
+      <input type = "button" class="bttn" value = "Calculate" onclick = "calcbytes()"/><br>
+      <input type = "number" step="0.01" id = "BytesOutStor"><b> Bytes (B)</b></><br>
+      <input type = "number" step="0.01" id = "KBytesOutStor"><b> KBytes (KB)</b></><br>
+      <input type = "number" step="0.01" id = "MBytesOutStor"><b> MBytes (MB)</b></><br>
+      <input type = "number" step="0.01" id = "GBytesOutStor"><b> GBytes (GB)</b></><br>
+      <input type = "number" step="0.01" id = "TBytesOutStor"><b> TBytes (TB)</b></><br>
+      <input type = "number" step="0.01" id = "PBytesOutStor"><b> PBytes (PB)</b></><br>
+  </form>
+</div>
+
+<div class='col-xs-6 col-md-6'>
+
+</div>
+
+</div>
+</div>
+</body>
+</html>
